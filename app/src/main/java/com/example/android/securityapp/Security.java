@@ -59,6 +59,12 @@ public class Security extends AppCompatActivity {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
             SparseArray<TextBlock> items = textRecognizer.detect(frame);
 
+            if(items.size()==0)
+            {
+                Toast toast = Toast.makeText(getApplicationContext(),"Error! No text detected. please scan again",Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < items.size(); i++) {
                 TextBlock x = items.valueAt(i);
@@ -69,4 +75,16 @@ public class Security extends AppCompatActivity {
             text.setText(stringBuilder.toString());
         }
     }
+
+    private void CheckText(String s)
+    {
+
+    }
+    public void submit(View view) {
+        String s= text.getText().toString();
+        CheckText(s);
+
+    }
+
+
 }
