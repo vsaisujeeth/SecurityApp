@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,7 +41,7 @@ import org.w3c.dom.Text;
 public class Security extends AppCompatActivity {
 
     ImageView imageView;
-    FirebaseFirestore database;
+    FirebaseDatabase db;
     Bitmap bitmap;
     EditText text;
     TextView status;
@@ -49,7 +50,8 @@ public class Security extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        database = FirebaseFirestore.getInstance();
+
+        db=FirebaseDatabase.getInstance();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security);
@@ -107,44 +109,49 @@ public class Security extends AppCompatActivity {
 
     private void CheckText(final String s)
     {
-        status.setText("entered");
 
-        database.collection("college").whereEqualTo("id","AP82HS6789")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        Query query =db.getReference("college").child("iit patna").child("vehicles").orderByChild("vehicle no").equalTo(s);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
                 {
+                    status.setText("OK");
+                    status.setTextColor(Color.WHITE);
+                    status.setTextSize(32);
+                    status.setBackgroundColor(Color.GREEN);
 
-                    if(task.getResult().size()!=0)
-                    {
-                        status.setText("OK");
-                        status.setTextColor(Color.WHITE);
-                        status.setTextSize(8);
-                        status.setBackgroundColor(Color.GREEN);
-                    }
-                    else
-                    {
-                        status.setText("un autherised");
-                        status.setTextColor(Color.WHITE);
-                        status.setTextSize(8);
-                        status.setBackgroundColor(Color.RED);
-                    }
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"Error reaching firebase",Toast.LENGTH_SHORT).show();
+                    status.setText("unauthorized");
+                    status.setTextColor(Color.WHITE);
+                    status.setTextSize(32);
+                    status.setBackgroundColor(Color.RED);
                 }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
 
+
+    }
+    private void hideSoftKeyBoard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+        if(imm.isAcceptingText()) { // verify if the soft keyboard is open
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
     }
     public void submit(View view) {
         String s= text.getText().toString();
         CheckText(s);
-
+        hideSoftKeyBoard();
     }
 
 
