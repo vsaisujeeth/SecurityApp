@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     public void signInButtons(View view) {
         if(view.getId() == R.id.button_admin){
 
+            Intent admin_intent= new Intent(this,Admin.class);
+            startActivity(admin_intent);
         }
         else if(view.getId() == R.id.button_res){
 
