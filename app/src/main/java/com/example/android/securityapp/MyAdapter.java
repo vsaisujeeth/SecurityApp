@@ -68,8 +68,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
      */
        Admin_List_Item admin_list_item= listItems.get(position);
-        holder.textViewHead.setText(admin_list_item.getHead());
-        holder.textViewDesc.setText(admin_list_item.getDesc());
+        holder.textViewHead.setText(admin_list_item.head);
+        holder.textViewDesc.setText(admin_list_item.desc);
 
     }
 

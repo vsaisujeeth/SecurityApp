@@ -111,7 +111,7 @@ public class Security extends AppCompatActivity {
     {
 
 
-        Query query =db.getReference("college").child("iit patna").child("vehicles").orderByChild("vehicle no").equalTo(s);
+        Query query =db.getReference("college").child("iit patna").child("vehicles").orderByChild("head").equalTo(s);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -153,6 +153,7 @@ public class Security extends AppCompatActivity {
         CheckText(s);
         hideSoftKeyBoard();
     }
+
 
 
 }
