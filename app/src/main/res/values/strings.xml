@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Security App</string>
     <string name="title_activity_admin">Admin</string>
+    <string name="title_activity_add_user">AddUser</string>
 </resources>

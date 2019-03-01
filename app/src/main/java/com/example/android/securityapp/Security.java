@@ -97,10 +97,11 @@ public class Security extends AppCompatActivity {
             for (int i = 0; i < items.size(); i++) {
                 TextBlock x = items.valueAt(i);
                 stringBuilder.append(x.getValue());
-                stringBuilder.append("\n");
+
             }
 
             String x= stringBuilder.toString();
+            x= enchance(x);
             text.setText(x);
             CheckText(x);
         }
@@ -149,11 +150,22 @@ public class Security extends AppCompatActivity {
         }
     }
     public void submit(View view) {
+        status.setText("waiting");
+        status.setBackgroundColor(Color.WHITE);
         String s= text.getText().toString();
+        s = enchance(s);
         CheckText(s);
         hideSoftKeyBoard();
     }
 
+    public String enchance(String s)
+    {
+        s = s.toUpperCase();
+        s=s.replace(" ","").trim();
+        s=s.replace("\n","");
+        text.setText(s);
+        return s;
+    }
 
 
 }

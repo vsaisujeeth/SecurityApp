@@ -31,10 +31,12 @@ public class Admin extends AppCompatActivity {
      List<Admin_List_Item> admin_listItems = new ArrayList<Admin_List_Item>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_admin);
 
 
 
-         db=FirebaseDatabase.getInstance();
+
+        db=FirebaseDatabase.getInstance();
         DatabaseReference databaseReference =db.getReference();
         databaseReference.child("college").child("iit patna").child("vehicles").addValueEventListener(new ValueEventListener() {
 
@@ -84,36 +86,17 @@ public class Admin extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-
-
-  /*      for(int i=0;i<=10;i++){
-            Admin_List_Item admin_list_item=new Admin_List_Item("Vehicle"+ (i+1),"yoyoyoyoyoyoyo");
-            admin_listItems.add(admin_list_item);
-        }
-        // specify an adapter (see also next example)
-      //  ArrayAdapter<item> arrayAdapter=new ArrayAdapter<>()
-        mAdapter = new MyAdapter(admin_listItems,this);
-        recyclerView.setAdapter(mAdapter);
-    */
-    }
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+             public void onClick(View view) {
+
+
             }
-        });
-    }*/
-    /*public void Add(View view) {
-
-    }*/
-
+                }
+        );
 }
+}
+
+
+

@@ -13,20 +13,35 @@
         android:paddingLeft="@dimen/fab_margin"
         android:paddingTop="@dimen/fab_margin"
         android:paddingRight="@dimen/fab_margin"
-        >
+        tools:layout_editor_absoluteX="317dp"
+        tools:layout_editor_absoluteY="27dp">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/vehicle_log"
+
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical">
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/vehicle_log"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical">
 
-      <!--  <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add New"
-            android:onClick="Add"
-            /> -->
-        </android.support.v7.widget.RecyclerView>
+                <!--  <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add New"
+                android:onClick="Add"
+                /> -->
+            </android.support.v7.widget.RecyclerView>
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="match_parent"
+                android:layout_height="84dp"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="@dimen/fab_margin"
+                android:onClick="onclick"/>
+        </android.support.design.widget.CoordinatorLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
