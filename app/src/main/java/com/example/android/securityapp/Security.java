@@ -118,14 +118,14 @@ public class Security extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists())
                 {
-                    status.setText("OK");
+                   // status.setText("OK");
                     status.setTextColor(Color.WHITE);
                     status.setTextSize(32);
                     status.setBackgroundColor(Color.GREEN);
 
                 }
                 else {
-                    status.setText("unauthorized");
+                    //status.setText("unauthorized");
                     status.setTextColor(Color.WHITE);
                     status.setTextSize(32);
                     status.setBackgroundColor(Color.RED);
@@ -160,9 +160,12 @@ public class Security extends AppCompatActivity {
 
     public String enchance(String s)
     {
+        status.setText(s);
         s = s.toUpperCase();
         s=s.replace(" ","").trim();
         s=s.replace("\n","");
+        Approximate approximate= new Approximate();
+        s=approximate.mainfn(s);
         text.setText(s);
         return s;
     }
