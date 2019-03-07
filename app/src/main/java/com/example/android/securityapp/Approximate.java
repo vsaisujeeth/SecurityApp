@@ -306,7 +306,6 @@ class Approximate {
             }
 
         }
-
         return a;
 
     }

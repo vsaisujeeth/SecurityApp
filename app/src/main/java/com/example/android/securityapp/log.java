@@ -25,7 +25,7 @@ public class log extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
-    List<Log_List_Item> log_list_items = new ArrayList<Log_List_Item>();
+    public List<Log_List_Item> log_list_items = new ArrayList<Log_List_Item>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_log);
@@ -36,6 +36,8 @@ public class log extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.logvec);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
+        ((LinearLayoutManager) layoutManager).setReverseLayout(true);
+        ((LinearLayoutManager) layoutManager).setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
 
 
@@ -47,7 +49,7 @@ public class log extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot dataSnap:dataSnapshot.getChildren()){
-                    Toast.makeText(getApplicationContext(),"entered",Toast.LENGTH_LONG).show();
+               //     Toast.makeText(getApplicationContext(),"entered",Toast.LENGTH_LONG).show();
                     Log_List_Item item = dataSnap.getValue(Log_List_Item.class);
                     log_list_items.add(item);
                 }

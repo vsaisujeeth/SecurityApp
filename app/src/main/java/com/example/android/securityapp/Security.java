@@ -141,7 +141,7 @@ public class Security extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    // status.setText("OK");
+                     status.setText("OK");
                     status.setTextColor(Color.WHITE);
                     status.setTextSize(32);
                     status.setBackgroundColor(Color.GREEN);
@@ -149,7 +149,7 @@ public class Security extends AppCompatActivity {
                     addToLog(s);
 
                 } else {
-                    //status.setText("unauthorized");
+                    status.setText("unauthorized");
                     status.setTextColor(Color.WHITE);
                     status.setTextSize(32);
                     status.setBackgroundColor(Color.RED);
@@ -215,6 +215,9 @@ public class Security extends AppCompatActivity {
     public String enchance(String s) {
 
         s = s.toUpperCase();
+        s=s.replace("-","");
+        s=s.replace("/","");
+        s=s.replace(".","");
         s = s.replace(" ", "").trim();
         s = s.replace("\n", "");
         Approximate approximate = new Approximate();
@@ -262,10 +265,10 @@ public class Security extends AppCompatActivity {
 
     public Bitmap effects(Bitmap bitmap) {
 
-        //bitmap=changeBitmapContrastBrightness(bitmap,1,0);
-        bitmap=blackandwhite(bitmap);
+        bitmap=changeBitmapContrastBrightness(bitmap,3,-50);
+        //bitmap=blackandwhite(bitmap);
 
-        TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+       /* TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!textRecognizer.isOperational()) {
             Toast toast = Toast.makeText(getApplicationContext(), "Couldn't Detect Text", Toast.LENGTH_SHORT);
             toast.show();
@@ -289,10 +292,10 @@ public class Security extends AppCompatActivity {
 
             String x = stringBuilder.toString();
             x = enchance(x);
-            status.setText(x);
-            CheckText(x);
+          //  status.setText(x);
+           // CheckText(x);
 
-        }
+        }*/
         ImageView imageView = (ImageView) findViewById(R.id.imageAdj);
         imageView.setImageBitmap(bitmap);
         return bitmap;

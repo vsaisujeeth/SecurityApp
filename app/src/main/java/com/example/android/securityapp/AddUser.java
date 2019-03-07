@@ -30,7 +30,7 @@ public class AddUser extends AppCompatActivity {
 
         public void addButton (View view){
             final String vehicleno, type;
-            vehicleno = ed_vehicleno.getText().toString();
+            vehicleno = ed_vehicleno.getText().toString().toUpperCase();
             type = ed_type.getText().toString();
             db = FirebaseDatabase.getInstance();
             final DatabaseReference databaseReference = db.getReference();
