@@ -41,7 +41,7 @@ public class log extends AppCompatActivity {
 
         db=FirebaseDatabase.getInstance();
         DatabaseReference databaseReference =db.getReference();
-        databaseReference.child("college").child("iit patna").child("log").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("college").child("iit patna").child("log").orderByChild("date").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

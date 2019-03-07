@@ -38,7 +38,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyViewHolder> {
             super(v);
 
             vehicleno=(TextView) itemView.findViewById(R.id.vehicleno);
-            type=(TextView) itemView.findViewById(R.id.type);
+           // type=(TextView) itemView.findViewById(R.id.type);
             date=(TextView) itemView.findViewById(R.id.date);
             time=(TextView) itemView.findViewById(R.id.time);
 
@@ -71,9 +71,11 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyViewHolder> {
 
          */
         Log_List_Item log_list_item= listItems.get(position);
+        String t=log_list_item.date;
+        t=t.substring(0,10);
         holder.vehicleno.setText(log_list_item.vehicleno);
-        holder.type.setText(log_list_item.type);
-        holder.date.setText(log_list_item.date);
+       // holder.type.setText(log_list_item.type);
+        holder.date.setText(t);
         holder.time.setText(log_list_item.time);
 
     }

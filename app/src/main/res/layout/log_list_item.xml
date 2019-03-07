@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="8dp"
             >
 
             <TextView
@@ -23,13 +24,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="heading"
+                android:textSize="32dp"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
-
+            <!--
             <TextView
                 android:id="@+id/type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="description" />
+                android:textSize="24dp"
+                android:text="description" />-->
             <TextView
                 android:id="@+id/date"
                 android:layout_width="match_parent"

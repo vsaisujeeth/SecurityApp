@@ -31,6 +31,14 @@ public class Admin extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
      List<Admin_List_Item> admin_listItems = new ArrayList<Admin_List_Item>();
     @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
+
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_admin);
 

@@ -44,6 +44,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Security extends AppCompatActivity {
 
     ImageView imageView;
@@ -143,6 +146,8 @@ public class Security extends AppCompatActivity {
                     status.setTextSize(32);
                     status.setBackgroundColor(Color.GREEN);
 
+                    addToLog(s);
+
                 } else {
                     //status.setText("unauthorized");
                     status.setTextColor(Color.WHITE);
@@ -155,6 +160,35 @@ public class Security extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+
+    }
+
+    private void addToLog(final String s) {
+        SimpleDateFormat sdf = new SimpleDateFormat("H:mm a");
+        String Time = sdf.format(new Date());
+        sdf = new SimpleDateFormat("yyyy/MM/dd,H:mm a");
+        String Date = sdf.format(new Date());
+        final Log_List_Item item=new Log_List_Item(Date,Time,"dummy",s);
+
+        db = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = db.getReference();
+        databaseReference.child("college").child("iit patna").child("log").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                    databaseReference.child("college").child("iit patna").child("log").child(s).setValue(item);
+                    Toast.makeText(getApplicationContext(),"Added Successfully to log ",Toast.LENGTH_SHORT).show();
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext()," Failed to Add to log !!",Toast.LENGTH_LONG).show();
             }
         });
 
