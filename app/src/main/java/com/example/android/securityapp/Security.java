@@ -2,7 +2,11 @@ package com.example.android.securityapp;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -48,48 +54,64 @@ public class Security extends AppCompatActivity {
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.security_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.log)
+        {
+            Intent intent=new Intent(getApplicationContext(),log.class);
+            startActivity(intent);
+        }
+        else if(item.getItemId()==R.id.settings)
+        {
+
+        }
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        db=FirebaseDatabase.getInstance();
+        db = FirebaseDatabase.getInstance();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security);
 
-        text = (EditText)findViewById(R.id.editText_regno);
-        imageView = (ImageView)findViewById(R.id.imageView2);
-        status = (TextView)findViewById(R.id.text_status);
-
-
+        text = (EditText) findViewById(R.id.editText_regno);
+        imageView = (ImageView) findViewById(R.id.imageView2);
+        status = (TextView) findViewById(R.id.text_status);
 
 
     }
 
     public void Shoot(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent,0);
+        startActivityForResult(intent, 0);
 
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-         bitmap = (Bitmap)data.getExtras().get("data");
+        bitmap = (Bitmap) data.getExtras().get("data");
         imageView.setImageBitmap(bitmap);
 
+        effects(bitmap);
         TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-        if(!textRecognizer.isOperational())
-        {
-            Toast toast = Toast.makeText(getApplicationContext(),"Couldn't Detect Text",Toast.LENGTH_SHORT);
+        if (!textRecognizer.isOperational()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Couldn't Detect Text", Toast.LENGTH_SHORT);
             toast.show();
-        }
-        else {
+        } else {
             Frame frame = new Frame.Builder().setBitmap(bitmap).build();
             SparseArray<TextBlock> items = textRecognizer.detect(frame);
 
-            if(items.size()==0)
-            {
-                Toast toast = Toast.makeText(getApplicationContext(),"Error! No text detected. please scan again",Toast.LENGTH_SHORT);
+            if (items.size() == 0) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Error! No text detected. please scan again", Toast.LENGTH_SHORT);
                 toast.show();
             }
 
@@ -100,31 +122,28 @@ public class Security extends AppCompatActivity {
 
             }
 
-            String x= stringBuilder.toString();
-            x= enchance(x);
+            String x = stringBuilder.toString();
+            x = enchance(x);
             text.setText(x);
             CheckText(x);
         }
     }
 
 
-    private void CheckText(final String s)
-    {
+    private void CheckText(final String s) {
 
 
-        Query query =db.getReference("college").child("iit patna").child("vehicles").orderByChild("head").equalTo(s);
+        Query query = db.getReference("college").child("iit patna").child("vehicles").orderByChild("head").equalTo(s);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists())
-                {
-                   // status.setText("OK");
+                if (dataSnapshot.exists()) {
+                    // status.setText("OK");
                     status.setTextColor(Color.WHITE);
                     status.setTextSize(32);
                     status.setBackgroundColor(Color.GREEN);
 
-                }
-                else {
+                } else {
                     //status.setText("unauthorized");
                     status.setTextColor(Color.WHITE);
                     status.setTextSize(32);
@@ -140,35 +159,108 @@ public class Security extends AppCompatActivity {
         });
 
 
-
     }
+
     private void hideSoftKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
-        if(imm.isAcceptingText()) { // verify if the soft keyboard is open
+        if (imm.isAcceptingText()) { // verify if the soft keyboard is open
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
+
     public void submit(View view) {
         status.setText("waiting");
         status.setBackgroundColor(Color.WHITE);
-        String s= text.getText().toString();
+        String s = text.getText().toString();
         s = enchance(s);
         CheckText(s);
         hideSoftKeyBoard();
     }
 
-    public String enchance(String s)
-    {
-        status.setText(s);
+    public String enchance(String s) {
+
         s = s.toUpperCase();
-        s=s.replace(" ","").trim();
-        s=s.replace("\n","");
-        Approximate approximate= new Approximate();
-        s=approximate.mainfn(s);
+        s = s.replace(" ", "").trim();
+        s = s.replace("\n", "");
+        Approximate approximate = new Approximate();
+        s = approximate.mainfn(s);
         text.setText(s);
         return s;
     }
 
+    public static Bitmap changeBitmapContrastBrightness(Bitmap bmp, float contrast, float brightness)
+    {
+        ColorMatrix cm = new ColorMatrix(new float[]
+                {
+                        contrast, 0, 0, 0, brightness,
+                        0, contrast, 0, 0, brightness,
+                        0, 0, contrast, 0, brightness,
+                        0, 0, 0, 1, 0
+                });
 
+        Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
+
+        Canvas canvas = new Canvas(ret);
+
+        Paint paint = new Paint();
+        paint.setColorFilter(new ColorMatrixColorFilter(cm));
+        canvas.drawBitmap(bmp, 0, 0, paint);
+
+        return ret;
+    }
+
+    public Bitmap blackandwhite(Bitmap bitmap) {
+        Bitmap bwBitmap = Bitmap.createBitmap( bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.RGB_565 );
+        float[] hsv = new float[ 3 ];
+        for( int col = 0; col < bitmap.getWidth(); col++ ) {
+            for( int row = 0; row < bitmap.getHeight(); row++ ) {
+                Color.colorToHSV( bitmap.getPixel( col, row ), hsv );
+                if( hsv[ 2 ] > 0.2f ) {
+                    bwBitmap.setPixel( col, row, 0xffffffff );
+                } else {
+                    bwBitmap.setPixel( col, row, 0xff000000 );
+                }
+            }
+        }
+        return bwBitmap;
+    }
+
+    public Bitmap effects(Bitmap bitmap) {
+
+        //bitmap=changeBitmapContrastBrightness(bitmap,1,0);
+        bitmap=blackandwhite(bitmap);
+
+        TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+        if (!textRecognizer.isOperational()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Couldn't Detect Text", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else
+        {
+            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+            SparseArray<TextBlock> items = textRecognizer.detect(frame);
+
+            if (items.size() == 0) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Error! No text detected. please scan again", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < items.size(); i++) {
+                TextBlock x = items.valueAt(i);
+                stringBuilder.append(x.getValue());
+
+            }
+
+            String x = stringBuilder.toString();
+            x = enchance(x);
+            status.setText(x);
+            CheckText(x);
+
+        }
+        ImageView imageView = (ImageView) findViewById(R.id.imageAdj);
+        imageView.setImageBitmap(bitmap);
+        return bitmap;
+    }
 }

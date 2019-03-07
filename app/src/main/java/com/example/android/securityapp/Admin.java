@@ -1,5 +1,6 @@
 package com.example.android.securityapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -91,6 +92,9 @@ public class Admin extends AppCompatActivity {
             @Override
              public void onClick(View view) {
 
+         //       Toast.makeText(getApplicationContext(),"OK",Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(getApplicationContext(),AddUser.class);
+                startActivity(intent);
 
             }
                 }
