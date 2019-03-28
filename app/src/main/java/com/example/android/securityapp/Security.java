@@ -24,6 +24,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.net.Uri;
+import android.widget.MediaController;
+import android.widget.VideoView;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.vision.Frame;
@@ -89,6 +93,13 @@ public class Security extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView2);
         status = (TextView) findViewById(R.id.text_status);
 
+        String uri = "rtsp://admin:vsaisujeeth1@192.168.137.142/live/ch00_0 ";
+        VideoView v = (VideoView) findViewById( R.id.videoView );
+        v.setVideoURI( Uri.parse(uri) );
+        v.setMediaController( new MediaController( this ) );
+        v.requestFocus();
+        v.start();
+
 
     }
 
@@ -104,7 +115,7 @@ public class Security extends AppCompatActivity {
         bitmap = (Bitmap) data.getExtras().get("data");
         imageView.setImageBitmap(bitmap);
 
-        effects(bitmap);
+        //effects(bitmap);
         TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!textRecognizer.isOperational()) {
             Toast toast = Toast.makeText(getApplicationContext(), "Couldn't Detect Text", Toast.LENGTH_SHORT);
@@ -263,12 +274,12 @@ public class Security extends AppCompatActivity {
         return bwBitmap;
     }
 
-    public Bitmap effects(Bitmap bitmap) {
+   /* public Bitmap effects(Bitmap bitmap) {
 
         bitmap=changeBitmapContrastBrightness(bitmap,3,-50);
         //bitmap=blackandwhite(bitmap);
 
-       /* TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+        /* TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!textRecognizer.isOperational()) {
             Toast toast = Toast.makeText(getApplicationContext(), "Couldn't Detect Text", Toast.LENGTH_SHORT);
             toast.show();
@@ -295,9 +306,9 @@ public class Security extends AppCompatActivity {
           //  status.setText(x);
            // CheckText(x);
 
-        }*/
+        }
         ImageView imageView = (ImageView) findViewById(R.id.imageAdj);
         imageView.setImageBitmap(bitmap);
         return bitmap;
-    }
+    }*/
 }
