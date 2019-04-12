@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
+import android.media.MediaMetadataRetriever;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -48,8 +49,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Security extends AppCompatActivity {
 
@@ -59,7 +64,8 @@ public class Security extends AppCompatActivity {
     EditText text;
     TextView status;
 
-
+   // String uri = "rtsp://admin:vsaisujeeth1@192.168.137.146/live/ch00_0 ";
+   String uri = "rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov";
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.security_menu,menu);
@@ -93,16 +99,38 @@ public class Security extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView2);
         status = (TextView) findViewById(R.id.text_status);
 
-        String uri = "rtsp://admin:vsaisujeeth1@192.168.137.142/live/ch00_0 ";
+        /*try {
+            test();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
         VideoView v = (VideoView) findViewById( R.id.videoView );
         v.setVideoURI( Uri.parse(uri) );
         v.setMediaController( new MediaController( this ) );
         v.requestFocus();
         v.start();
+        v.getDrawingCache();
 
 
     }
 
+   /* private void test() throws IOException {
+        InetAddress localhost = InetAddress.getLocalHost();
+
+        // IPv4 usage
+        byte[] ip = localhost.getAddress();
+
+        int i=146;
+        ip[3] = (byte)i;
+        InetAddress address = InetAddress.getByAddress(ip);
+        if (address.isReachable(1000))
+        {
+            Toast.makeText(this,address + " - Pinging... Pinging",Toast.LENGTH_SHORT).show();
+
+        }
+    }
+    */
     public void Shoot(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 0);
@@ -114,35 +142,40 @@ public class Security extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         bitmap = (Bitmap) data.getExtras().get("data");
         imageView.setImageBitmap(bitmap);
+        getText(bitmap);
 
         //effects(bitmap);
-        TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-        if (!textRecognizer.isOperational()) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Couldn't Detect Text", Toast.LENGTH_SHORT);
-            toast.show();
-        } else {
-            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-            SparseArray<TextBlock> items = textRecognizer.detect(frame);
 
-            if (items.size() == 0) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Error! No text detected. please scan again", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < items.size(); i++) {
-                TextBlock x = items.valueAt(i);
-                stringBuilder.append(x.getValue());
-
-            }
-
-            String x = stringBuilder.toString();
-            x = enchance(x);
-            text.setText(x);
-            CheckText(x);
-        }
     }
 
+    private void getText(Bitmap bitmap)
+        {
+            TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+            if (!textRecognizer.isOperational()) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Couldn't Detect Text", Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                SparseArray<TextBlock> items = textRecognizer.detect(frame);
+
+                if (items.size() == 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Error! No text detected. please scan again", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < items.size(); i++) {
+                    TextBlock x = items.valueAt(i);
+                    stringBuilder.append(x.getValue());
+
+                }
+
+                String x = stringBuilder.toString();
+                x = enchance(x);
+                text.setText(x);
+                CheckText(x);
+            }
+        }
 
     private void CheckText(final String s) {
 
@@ -272,6 +305,14 @@ public class Security extends AppCompatActivity {
             }
         }
         return bwBitmap;
+    }
+
+    public void snap(View view) {
+
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(String.valueOf(Uri.parse(uri)), new HashMap<String, String>());
+        Bitmap image = retriever.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+        getText(image);
     }
 
    /* public Bitmap effects(Bitmap bitmap) {
