@@ -40,12 +40,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
 
 import org.w3c.dom.Text;
 
@@ -64,8 +59,8 @@ public class Security extends AppCompatActivity {
     EditText text;
     TextView status;
 
-   // String uri = "rtsp://admin:vsaisujeeth1@192.168.137.146/live/ch00_0 ";
-   String uri = "rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov";
+    String uri = "rtsp://admin:vsaisujeeth1@192.168.137.146/live/ch00_0 ";
+   //String uri = "rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov";
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.security_menu,menu);
