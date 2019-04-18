@@ -1,0 +1,85 @@
+{
+  "college" : {
+    "iit patna" : {
+      "log" : {
+        "AP00WQ1234" : {
+          "date" : "2019/03/07,23:03 PM",
+          "time" : "23:03 PM",
+          "vehicleno" : "AP00WQ1234"
+        },
+        "AP03AA8005" : {
+          "date" : "2019/03/08,11:06 AM",
+          "time" : "11:06 AM",
+          "vehicleno" : "AP03AA8005"
+        },
+        "BR03CS8993" : {
+          "date" : "2019/03/07,23:11 PM",
+          "time" : "23:11 PM",
+          "vehicleno" : "BR03CS8993"
+        },
+        "KA03AB3289" : {
+          "date" : "2019/03/08,0:51 AM",
+          "time" : "0:51 AM",
+          "vehicleno" : "KA03AB3289"
+        },
+        "MH12DE1433" : {
+          "date" : "2019/03/07,23:13 PM",
+          "time" : "23:13 PM",
+          "vehicleno" : "MH12DE1433"
+        },
+        "TS08ER1643" : {
+          "date" : "2019/03/08,14:48 PM",
+          "time" : "14:48 PM",
+          "vehicleno" : "TS08ER1643"
+        },
+        "UP65DQ1234" : {
+          "date" : "2019/03/07,23:13 PM",
+          "time" : "23:13 PM",
+          "vehicleno" : "UP65DQ1234"
+        }
+      },
+      "vehicles" : {
+        "AP00WQ1234" : {
+          "desc" : "bus",
+          "head" : "AP00WQ1234"
+        },
+        "AP03AA8005" : {
+          "desc" : "xuv",
+          "head" : "AP03AA8005"
+        },
+        "AP10SD3476" : {
+          "desc" : "car",
+          "head" : "AP10SD3476"
+        },
+        "BR03CS8993" : {
+          "desc" : "car",
+          "head" : "BR03CS8993"
+        },
+        "BR09GD8756" : {
+          "desc" : "bike",
+          "head" : "BR09GD8756"
+        },
+        "BR10TD1234" : {
+          "desc" : "van",
+          "head" : "BR10TD1234"
+        },
+        "KA03AB3289" : {
+          "desc" : "benz",
+          "head" : "KA03AB3289"
+        },
+        "MH12DE1433" : {
+          "desc" : "car",
+          "head" : "MH12DE1433"
+        },
+        "TS08ER1643" : {
+          "desc" : "car",
+          "head" : "TS08ER1643"
+        },
+        "UP65DQ1234" : {
+          "desc" : "car",
+          "head" : "UP65DQ1234"
+        }
+      }
+    }
+  }
+}
