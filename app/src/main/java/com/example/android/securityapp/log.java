@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class log extends AppCompatActivity {
@@ -53,6 +54,8 @@ public class log extends AppCompatActivity {
                     Log_List_Item item = dataSnap.getValue(Log_List_Item.class);
                     log_list_items.add(item);
                 }
+
+                Collections.reverse(log_list_items);
                 mAdapter = new LogAdapter(log_list_items,getApplicationContext());
                 recyclerView.setAdapter(mAdapter);
 

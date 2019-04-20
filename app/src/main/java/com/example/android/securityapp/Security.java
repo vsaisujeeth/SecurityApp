@@ -184,8 +184,23 @@ public class Security extends AppCompatActivity {
                     status.setTextColor(Color.WHITE);
                     status.setTextSize(32);
                     status.setBackgroundColor(Color.GREEN);
+                final DatabaseReference getMobile= db.getReference("college").child("iit patna").child("vehicles").child(s).child("mobile");
+                    getMobile.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    String   mobile =dataSnapshot.getValue(String.class);
+                                    addToLog(s, mobile);
+                                }
 
-                    addToLog(s);
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            }
+                    );
+                  //  Toast.makeText(getApplicationContext(),mobile,Toast.LENGTH_SHORT).show();
+
+
 
                 } else {
                     status.setText("unauthorized");
@@ -205,12 +220,12 @@ public class Security extends AppCompatActivity {
 
     }
 
-    private void addToLog(final String s) {
+    private void addToLog(final String s,final String mobile) {
         SimpleDateFormat sdf = new SimpleDateFormat("H:mm a");
         String Time = sdf.format(new Date());
-        sdf = new SimpleDateFormat("yyyy/MM/dd,H:mm a");
-        String Date = sdf.format(new Date());
-        final Log_List_Item item=new Log_List_Item(Date,Time,"dummy",s);
+        sdf = new SimpleDateFormat("yyyy-MM-dd,H:mm a");
+        final String Date = sdf.format(new Date());
+        final Log_List_Item item=new Log_List_Item(Date,Time,"dummy",s,mobile);
 
         db = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = db.getReference();
@@ -219,7 +234,7 @@ public class Security extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                    databaseReference.child("college").child("iit patna").child("log").child(s).setValue(item);
+                    databaseReference.child("college").child("iit patna").child("log").child(Date).setValue(item);
                     Toast.makeText(getApplicationContext(),"Added Successfully to log ",Toast.LENGTH_SHORT).show();
 
             }

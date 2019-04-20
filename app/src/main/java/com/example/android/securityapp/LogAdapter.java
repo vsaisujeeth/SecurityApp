@@ -33,6 +33,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyViewHolder> {
         public TextView type;
         public TextView date;
         public TextView time;
+        public TextView mobile;
 
         public MyViewHolder(View v) {
             super(v);
@@ -41,7 +42,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyViewHolder> {
            // type=(TextView) itemView.findViewById(R.id.type);
             date=(TextView) itemView.findViewById(R.id.date);
             time=(TextView) itemView.findViewById(R.id.time);
-
+            mobile=(TextView) itemView.findViewById(R.id.mobile);
         }
     }
 
@@ -77,6 +78,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.MyViewHolder> {
        // holder.type.setText(log_list_item.type);
         holder.date.setText(t);
         holder.time.setText(log_list_item.time);
+        holder.mobile.setText(log_list_item.mobile);
 
     }
 

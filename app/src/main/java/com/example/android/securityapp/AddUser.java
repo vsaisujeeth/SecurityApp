@@ -18,20 +18,24 @@ public class AddUser extends AppCompatActivity {
     FirebaseDatabase db;
     EditText ed_vehicleno;
     EditText ed_type;
+    EditText ed_mobile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
          ed_vehicleno = (EditText) findViewById(R.id.ed_vehicleno);
          ed_type = (EditText) findViewById(R.id.ed_type);
-
+        ed_mobile=(EditText) findViewById(R.id.ed_mobile);
     }
 
         public void addButton (View view){
-            final String vehicleno, type;
+            final String vehicleno, type,mobile;
             vehicleno = ed_vehicleno.getText().toString().toUpperCase();
             type = ed_type.getText().toString();
+            mobile=ed_mobile.getText().toString();
             db = FirebaseDatabase.getInstance();
+
             final DatabaseReference databaseReference = db.getReference();
             databaseReference.child("college").child("iit patna").child("vehicles").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -42,7 +46,7 @@ public class AddUser extends AppCompatActivity {
                     }
                     else
                     {
-                        Admin_List_Item admin_list_item = new Admin_List_Item(vehicleno, type);
+                        Admin_List_Item admin_list_item = new Admin_List_Item(vehicleno, type,mobile);
                         databaseReference.child("college").child("iit patna").child("vehicles").child(admin_list_item.head).setValue(admin_list_item);
                         Toast.makeText(getApplicationContext(),"Added Successfully",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(getApplicationContext(),Admin.class);

@@ -51,10 +51,9 @@ public class Admin extends AppCompatActivity {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-              //  Toast.makeText(getApplicationContext(),"fsdakjg",
-                //        Toast.LENGTH_SHORT).show();
-                /*for(int i=0;i<=10;i++){
-                    Admin_List_Item admin_list_item=new Admin_List_Item("Vehicle"+ (i+1),"yoyoyoyoyoyoyo");
+
+               /*for(int i=0;i<=10;i++){
+                    Admin_List_Item admin_list_item=new Admin_List_Item("Vehicle"+ (i+1),"yoyoyoyoyoyoyo","56468");
                     admin_listItems.add(admin_list_item);
                 }*/
                 // specify an adapter (see also next example)
@@ -62,8 +61,8 @@ public class Admin extends AppCompatActivity {
 
                 for(DataSnapshot dataSnap:dataSnapshot.getChildren()){
 
-                    Admin_List_Item item = dataSnap.getValue(Admin_List_Item.class);
-
+                   Admin_List_Item item = dataSnap.getValue(Admin_List_Item.class);
+                    //Toast.makeText(getApplicationContext(),"fsdakjg",Toast.LENGTH_SHORT).show();
                     admin_listItems.add(item);
                 }
                 mAdapter = new MyAdapter(admin_listItems,getApplicationContext());

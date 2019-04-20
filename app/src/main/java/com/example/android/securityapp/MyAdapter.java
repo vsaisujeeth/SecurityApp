@@ -32,13 +32,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView textViewHead;
         public TextView textViewDesc;
         public TextView textView;
+        public TextView textViewMobile;
 
         public MyViewHolder(View v) {
             super(v);
 
             textViewHead=(TextView) itemView.findViewById(R.id.textViewHead);
             textViewDesc=(TextView) itemView.findViewById(R.id.textViewDesc);
-
+            textViewMobile=(TextView) itemView.findViewById(R.id.textViewMobile);
         }
     }
 
@@ -70,7 +71,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
        Admin_List_Item admin_list_item= listItems.get(position);
         holder.textViewHead.setText(admin_list_item.head);
         holder.textViewDesc.setText(admin_list_item.desc);
-
+        holder.textViewMobile.setText(admin_list_item.mobile);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
