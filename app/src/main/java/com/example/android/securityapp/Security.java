@@ -59,7 +59,7 @@ public class Security extends AppCompatActivity {
     EditText text;
     TextView status;
 
-    String uri = "rtsp://admin:vsaisujeeth1@192.168.137.146/live/ch00_0 ";
+    String uri = "rtsp://admin:vsaisujeeth1@192.168.137.230/live/ch00_0 ";
    //String uri = "rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov";
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

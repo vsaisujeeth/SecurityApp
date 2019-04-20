@@ -55,7 +55,7 @@ public class log extends AppCompatActivity {
                     log_list_items.add(item);
                 }
 
-                Collections.reverse(log_list_items);
+                //Collections.reverse(log_list_items);
                 mAdapter = new LogAdapter(log_list_items,getApplicationContext());
                 recyclerView.setAdapter(mAdapter);
 
